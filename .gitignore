@@ -12,8 +12,10 @@ build/
 .env
 .env.local
 .env.*.local
+.secret.local
 *.pem
 serviceAccount*.json
+serviceAccountKey*.json
 
 # Editor / OS
 .DS_Store

@@ -86,6 +86,38 @@ pnpm deploy:functions       # deploy Cloud Functions
 pnpm deploy:hosting         # deploy web app
 ```
 
+## Secrets — three stores, one rule each
+
+Three different stores hold three different categories of secret. Mixing them is the most common security mistake. The rule for each:
+
+| Store | What goes here | What does NOT |
+|---|---|---|
+| **Google Cloud Secret Manager** (`firebase functions:secrets:set`) | All server-side API keys: `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SIGNING_SECRET` | Client-side config; any value the browser/app will see |
+| **Local `.env.local` files** (gitignored) | Per-developer config: Firebase web config, Stripe publishable key, emulator toggles | Anything you wouldn't put in a screenshot of your code |
+| **GitHub Actions secrets** (Repo Settings → Secrets and variables → Actions) | `FIREBASE_SERVICE_ACCOUNT_JSON` for CI deploys (added in Phase 10) | Anthropic/Gemini/Stripe keys — those go in Cloud Secret Manager, NEVER here |
+
+Full reference: see `.env.example` at the repo root.
+
+### Setting up secrets locally (one-time)
+
+```bash
+# Firebase web config → copy from Firebase Console into apps/web/.env.local
+# (Phase 2 will scaffold the file; until then, just keep the values handy.)
+
+# Server-side keys → Cloud Secret Manager (used by Functions at runtime)
+firebase functions:secrets:set ANTHROPIC_API_KEY
+firebase functions:secrets:set GEMINI_API_KEY
+firebase functions:secrets:set STRIPE_SECRET_KEY
+firebase functions:secrets:set STRIPE_WEBHOOK_SIGNING_SECRET
+
+# For LOCAL emulator dev that needs the same keys, create
+# apps/functions/.secret.local (gitignored) with KEY=value lines.
+```
+
+### GitHub Actions secrets
+
+Today the CI workflow only runs typecheck + lint + unit tests — **no GitHub secrets are required**. Add `FIREBASE_SERVICE_ACCOUNT_JSON` only when Phase 10 adds the deploy job. To generate that secret: Firebase Console → Project Settings → Service accounts → "Generate new private key" → paste the entire JSON into the GitHub secret.
+
 ## Pre-deploy security checklist
 
 Before any production deploy:
