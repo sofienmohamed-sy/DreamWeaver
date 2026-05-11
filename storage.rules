@@ -1,0 +1,14 @@
+rules_version = '2';
+
+// LEARN: Same default-deny posture as Firestore. Storage is even more
+// dangerous if misconfigured — a wrong rule can expose every user's
+// uploaded files publicly. Phase 5 will allow owner-only reads on
+// character portrait paths; writes will remain Functions-only forever.
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

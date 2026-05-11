@@ -1,0 +1,27 @@
+{
+  "name": "dreamweaver",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Personal AI World — write a 3-sentence story, inhabit it forever.",
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  },
+  "packageManager": "pnpm@9.12.0",
+  "scripts": {
+    "typecheck": "pnpm -r --parallel typecheck",
+    "lint": "pnpm -r --parallel lint",
+    "test": "pnpm -r --parallel test",
+    "build": "pnpm -r build",
+    "dev:web": "pnpm --filter @dreamweaver/web dev",
+    "dev:mobile": "pnpm --filter @dreamweaver/mobile dev",
+    "dev:functions": "pnpm --filter @dreamweaver/functions dev",
+    "emulators": "firebase emulators:start",
+    "deploy:rules": "firebase deploy --only firestore:rules,storage",
+    "deploy:functions": "firebase deploy --only functions",
+    "deploy:hosting": "firebase deploy --only hosting"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}
