@@ -18,9 +18,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # LEARN: We deliberately do NOT pass `version:` here. The
+      # `packageManager` field in root package.json ("pnpm@9.12.0") is
+      # the single source of truth; pnpm/action-setup@v4 reads it
+      # automatically and pins the same version locally and in CI.
+      # Passing `version:` alongside `packageManager` makes the action
+      # fail with a "multiple versions specified" error.
       - uses: pnpm/action-setup@v4
-        with:
-          version: 9
 
       - uses: actions/setup-node@v4
         with:
