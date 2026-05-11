@@ -8,7 +8,7 @@ Each phase commits as multiple focused commits, not one giant blob. After the ph
 
 ---
 
-## Phase 0 — Foundation `[~]`
+## Phase 0 — Foundation `[x]`
 
 Goal: empty but well-organized monorepo ready for everything that follows.
 
@@ -19,24 +19,24 @@ Goal: empty but well-organized monorepo ready for everything that follows.
 - [x] Default-deny `firestore.rules` and `storage.rules`
 - [x] Empty `firestore.indexes.json`
 - [x] Documentation (`CLAUDE.md`, `SPEC.md`, `ARCHITECTURE.md`, `ROADMAP.md`)
-- [ ] CI workflow (`.github/workflows/ci.yml` — lint + typecheck + test)
+- [x] CI workflow (`.github/workflows/ci.yml` — typecheck + lint + test)
 
 **Definition of done**: `pnpm install` works; `firebase deploy --only firestore:rules,storage` would succeed against a real project; CI workflow runs on PR.
 
 ---
 
-## Phase 1 — Shared package `[ ]`
+## Phase 1 — Shared package `[x]`
 
 Goal: every data shape in DreamWeaver, defined once.
 
-- [ ] `packages/shared/package.json` + `tsconfig.json`
-- [ ] Zod schemas: `user`, `plan`, `quota`, `world`, `location`, `character`, `plotThread`, `session`, `message`, `worldEvent`, `worldGenOutput`
-- [ ] Inferred TS types exported via `z.infer<typeof Schema>`
-- [ ] Constants: rate limits, model IDs, prompt versions, default world params
-- [ ] Prompt strings: `worldGen`, `session`, `tickWorld`, `memoryExtract` (versioned)
-- [ ] Vitest tests for schema parsing (positive + negative cases)
+- [x] `packages/shared/package.json` + `tsconfig.json` + `tsconfig.build.json`
+- [x] Zod schemas: `user`, `plan`, `quota`, `world`, `location`, `character`, `plotThread`, `session`, `message`, `worldEvent`, `worldGenOutput`
+- [x] Inferred TS types exported via `z.infer<typeof Schema>`
+- [x] Constants: rate limits, model IDs, prompt versions, default world params
+- [x] Prompt strings: `worldGen`, `session`, `tickWorld`, `memoryExtract` (versioned)
+- [x] Vitest tests for schema parsing (positive + negative cases) — 55 tests
 
-**Definition of done**: `pnpm --filter @dreamweaver/shared test` green. Zero `any` in the package.
+**Definition of done**: ✅ `pnpm --filter @dreamweaver/shared test` green (55/55). Zero `any` in the package.
 
 ---
 
