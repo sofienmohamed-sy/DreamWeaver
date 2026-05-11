@@ -1,0 +1,20 @@
+rules_version = '2';
+
+// LEARN: Default-deny is the only safe starting posture for Firestore.
+// Every collection must be EXPLICITLY allowed below — if a path isn't
+// matched by an allow rule, it's denied. The opposite (default-allow) is
+// how data leaks happen: someone forgets a rule, and the whole world can
+// read your users' emails.
+//
+// Phase 3 will replace this stub with per-collection rules for users,
+// worlds, characters, sessions, messages, and quotas. Until then, no
+// client can read or write anything — Cloud Functions (Admin SDK) bypass
+// these rules and remain the only writer.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
